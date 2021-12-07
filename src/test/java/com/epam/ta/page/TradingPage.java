@@ -22,16 +22,20 @@ public class TradingPage extends AbstractPage{
     private final By locatorInputLots = By.xpath("//*[contains(@class,'TradingPage__Order')]//input[contains(@value,'0')]");
     private final By locatorBuyButton = By.xpath("//*[contains(@class,'OrderButton__Panel')]");
     private final By locatorNavMenu = By.xpath("//*[contains(@class,'navButton')]");
-    private final By locatorEditFirstOrder = By.xpath("//div[contains(@class,'close-button')]");
+    private final By locatorControlButtons = By.xpath("//div[contains(@class,'close-button')]");
     private final By locatorTakeProfitInput = By.xpath("//div[contains(@class,'OrderModifyPopup')]//input");
     private final By locatorApplyTakeProfitButton = By.xpath("//div[contains(@class,'OrderModifyPopup')]//button");
-
     private final By locatorOrdersList = By.xpath("//*[contains(@class,'ScrollContainer')]/div");
-
-
-    private final By locMoreInfo = By.xpath("//*[@id=\"root\"]/div[3]/div/div[1]/div[2]/div[2]/div[3]/div/div/div[2]/div/div/div/div/div/div/div[2]/div[2]/div/div[1]/div");
+    private final By locatorMoreInfo = By.xpath("//div[@class='buttons-container']/div/div[1]");
     private final By locatorTakeProfitValue = By.xpath("//*[text()='Take Profit']/following-sibling::div");
-
+    private final By locatorAllTabs = By.xpath("//div[contains(@class,'asset-close')]");
+    private final By locatorWatchlistInput = By.xpath("//div[contains(@class,'NavigationMenuPanel')]//input");
+    private final By locatorStar = By.xpath("//div[contains(@class,'favoritesStar')]");
+    private final By locatorCompaniesDropdown = By.xpath("//div[contains(@class,'NavigationMenuPanel')]//button");
+    private final By locatorAllCompanies = By.xpath("//div[text()='All']");
+    private final By locatorFaveCompanies = By.xpath("//div[text()='Favorites']");
+    private final By locatorCompany = By.xpath("//div[contains(text(),'AAPL')]");
+    private final By locatorFavesList = By.xpath("//div[contains(@class,'WatchList')]");
 
     public TradingPage(WebDriver driver){
         super(driver);
@@ -66,30 +70,18 @@ public class TradingPage extends AbstractPage{
         return this;
     }
 
-    public int getOrdersCount(){
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorNavMenu));
-        List<WebElement> navMenu = driver.findElements(locatorNavMenu);
-        WebElement portfolioButton = navMenu.get(1);
-        portfolioButton.click();
-
-        List<WebElement> ordersList = driver.findElements(locatorOrdersList);
-        portfolioButton.click();
-        return ordersList.size();
-    }
-
-    public TradingPage editLot(){
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorNavMenu));
-        List<WebElement> navMenu = driver.findElements(locatorNavMenu);
+    public TradingPage editLastLot(){
+        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
         WebElement portfolioButton = navMenu.get(1);
         portfolioButton.click();
 
         WebElement editFirstOrderButton = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorEditFirstOrder));
+                .until(ExpectedConditions.presenceOfElementLocated(locatorControlButtons));
         editFirstOrderButton.click();
 
         WebElement takeProfitInput = driver.findElement(locatorTakeProfitInput);
+        takeProfitInput.clear();
         takeProfitInput.sendKeys("1000000.88");
 
         WebElement applyTakeProfitButton = driver.findElement(locatorApplyTakeProfitButton);
@@ -100,16 +92,97 @@ public class TradingPage extends AbstractPage{
         return this;
     }
 
-    public String getTakeProfitValue(){
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorNavMenu));
-        List<WebElement> navMenu = driver.findElements(locatorNavMenu);
+    public TradingPage deleteAllLots(){
+        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
         WebElement portfolioButton = navMenu.get(1);
         portfolioButton.click();
 
-        driver.findElement(locMoreInfo).click();
+        int count = getOrdersCount();
+        for (int i=1;i<=count;i++){
+            List<WebElement> controlButtons = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                    .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorControlButtons));
+            //List<WebElement> controlButtons = driver.findElements(locatorControlButtons);
+            controlButtons.get(1).click();
+        }
+
+        portfolioButton.click();
+
+        return this;
+    }
+
+    public TradingPage addCompanyToFaves(){
+        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+        WebElement watchListButton = navMenu.get(0);
+        watchListButton.click();
+
+        WebElement dropDown = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorCompaniesDropdown));
+        dropDown.click();
+        WebElement allCompanies = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorAllCompanies));
+        allCompanies.click();
+
+        WebElement input = driver.findElement(locatorWatchlistInput);
+        input.clear();
+        input.sendKeys("APPL");
+
+        WebElement star = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorStar));
+        star.click();
+
+        watchListButton.click();
+
+        return this;
+    }
+
+    public boolean isCompanyInFaves(){
+        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+        WebElement watchListButton = navMenu.get(0);
+        watchListButton.click();
+
+        WebElement dropDown = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorCompaniesDropdown));
+        dropDown.click();
+        WebElement faveCompanies = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorFaveCompanies));
+        faveCompanies.click();
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorFavesList));
+
+        int size = driver.findElements(locatorCompany).size();
+
+        return (size != 0);
+    }
+
+    public int getOrdersCount(){
+        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+        WebElement portfolioButton = navMenu.get(1);
+        portfolioButton.click();
+
+        List<WebElement> ordersList = driver.findElements(locatorOrdersList);
+        portfolioButton.click();
+        return ordersList.size();
+    }
+
+    public int getAllTabsCount(){
+        List<WebElement> allTabs = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorAllTabs));
+        return allTabs.size();
+    }
+
+    public String getTakeProfitValueOfLast(){
+        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+        WebElement portfolioButton = navMenu.get(1);
+        portfolioButton.click();
+
+        driver.findElement(locatorMoreInfo).click();
         String takeProfitValue = driver.findElement(locatorTakeProfitValue).getText().replace(",","");
-        driver.findElement(locMoreInfo).click();
+        driver.findElement(locatorMoreInfo).click();
 
         portfolioButton.click();
         return takeProfitValue;
