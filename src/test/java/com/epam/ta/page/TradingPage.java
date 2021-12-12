@@ -1,7 +1,5 @@
 package com.epam.ta.page;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +11,6 @@ import java.util.List;
 
 public class TradingPage extends AbstractPage{
 
-    private final Logger logger = LogManager.getRootLogger();
     private final String PAGE_URL = "https://my.exness.com/webtrading/";
 
     private final By locatorAddTab = By.className("add-tab-button");

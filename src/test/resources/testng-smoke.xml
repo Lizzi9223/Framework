@@ -3,7 +3,7 @@
 <suite name="Smoke" verbose="1" >
     <test name="SetBalance">
         <classes>
-            <class name="com.epam.ta.test.ActionsWithLotTest" />
+            <class name="com.epam.ta.test.UserAccessTests" />
         </classes>
     </test>
 </suite>

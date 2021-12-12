@@ -1,7 +1,5 @@
 package com.epam.ta.page;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,8 +8,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+import java.lang.String;
+
 public class AccountPage extends AbstractPage{
-    private final Logger logger = LogManager.getRootLogger();
+
     private final String PAGE_URL = "https://my.exness.com";
     int balanceValue = 1000;
 
@@ -21,12 +22,21 @@ public class AccountPage extends AbstractPage{
     private final By locatorTrade = By.xpath("//div[contains(@class,'AccountCards')]/button[text()='Trade']");
     private final By locatorExnessTerminal = By.xpath("//a[contains(@class,'ApplicationsLinks')]");
     private final By locatorTraidingPageBody = By.xpath("//*[@id='tradingPage']");
+    private final By locatorSettings = By.xpath("//div[contains(@class,'AccountCogMenu')]");
+    private final By locatorRename = By.xpath("//li/span[text()='Rename account']");
+    private final By locatorAccName = By.xpath("//div[contains(@class,'AccountCards_topText')]/div");
 
     @FindBy(id = "amount")
-    private WebElement inputArea;
+    private WebElement inputAreaBalance;
+
+    @FindBy(id = "alias")
+    private WebElement inputAreaName;
 
     @FindBy(xpath = "//form/button")
     private WebElement saveChanges;
+
+    @FindBy(xpath = "//button[text()='Rename Account']")
+    private WebElement renameAccout;
 
     public AccountPage(WebDriver driver){
         super(driver);
@@ -53,9 +63,41 @@ public class AccountPage extends AbstractPage{
                 .until(ExpectedConditions.presenceOfElementLocated(locatorSetBalance));
         setBalanceButton.click();
 
-        inputArea.clear();
-        inputArea.sendKeys(Integer.toString(balanceValue));
+        inputAreaBalance.clear();
+        inputAreaBalance.sendKeys(Integer.toString(balanceValue));
         saveChanges.click();
+        driver.navigate().refresh();
+
+        return this;
+    }
+
+    public String getAccountName(){
+        WebElement demoTab = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorDemoTab));
+        demoTab.click();
+
+        List<WebElement> name = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorAccName));
+        String fullName = name.get(1).getText().toString();
+
+        return fullName.substring(0,fullName.indexOf(' '));
+    }
+
+    public AccountPage renameAccount(){
+        WebElement demoTab = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorDemoTab));
+        demoTab.click();
+
+        List<WebElement> settings = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorSettings));
+        settings.get(1).click();
+
+        driver.findElements(locatorRename).get(1).click();
+
+        inputAreaName.clear();
+        inputAreaName.sendKeys("NewAccName");
+
+        renameAccout.click();
         driver.navigate().refresh();
 
         return this;

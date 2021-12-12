@@ -9,8 +9,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class UserAccessTests extends CommonConditions {
-	@Test(description = "set demo account balance")
-	public void oneCanLoginExness(){
+	@Test(description = "set demo account balance", priority = 1)
+	public void setBalance(){
 		User testUser = UserCreator.withCredentialsFromProperty();
 		AccountPage accountPage = new HomePage(driver)
 				.openPage()
@@ -21,8 +21,20 @@ public class UserAccessTests extends CommonConditions {
 		Assert.assertEquals(accountPage.getBalance(), 1000);
 	}
 
-	@Test(description = "open web terminal")
-	public void trading(){
+	@Test(description = "rename account", priority = 1)
+	public void renameAccount(){
+		User testUser = UserCreator.withCredentialsFromProperty();
+		AccountPage accountPage = new HomePage(driver)
+				.openPage()
+				.goToSignInPage()
+				.signIn(testUser)
+				.renameAccount();
+
+		Assert.assertEquals(accountPage.getAccountName(), "NewAccName");
+	}
+
+	@Test(description = "open web terminal", priority = 2)
+	public void startTraiding(){
 		User testUser = UserCreator.withCredentialsFromProperty();
 		TradingPage tradingPage = new HomePage(driver)
 				.openPage()
