@@ -19,33 +19,21 @@ import java.time.format.DateTimeFormatter;
 public class TestListener implements ITestListener {
     private Logger log = LogManager.getRootLogger();
 
-    public void onTestStart(ITestResult iTestResult) {
+    public void onTestStart(ITestResult iTestResult) {}
 
-    }
-
-    public void onTestSuccess(ITestResult iTestResult) {
-
-    }
+    public void onTestSuccess(ITestResult iTestResult) {}
 
     public void onTestFailure(ITestResult iTestResult) {
         saveScreenshot();
     }
 
-    public void onTestSkipped(ITestResult iTestResult) {
+    public void onTestSkipped(ITestResult iTestResult) {}
 
-    }
+    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {}
 
-    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
+    public void onStart(ITestContext iTestContext) {}
 
-    }
-
-    public void onStart(ITestContext iTestContext) {
-
-    }
-
-    public void onFinish(ITestContext iTestContext) {
-
-    }
+    public void onFinish(ITestContext iTestContext) {}
 
     private void saveScreenshot(){
         File screenCapture = ((TakesScreenshot)DriverSingleton

@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.lang.String;
@@ -14,7 +12,18 @@ import java.lang.String;
 public class AccountPage extends AbstractPage{
 
     private final String PAGE_URL = "https://my.exness.com";
-    int balanceValue = 1000;
+
+    @FindBy(id = "amount")
+    private WebElement inputAreaBalance;
+
+    @FindBy(id = "alias")
+    private WebElement inputAreaName;
+
+    @FindBy(xpath = "//form/button")
+    private WebElement saveChanges;
+
+    @FindBy(xpath = "//button[text()='Rename Account']")
+    private WebElement renameAccout;
 
     private final By locatorDemoTab=By.xpath("//div[contains(@class,'Tabs_container')]/div[contains(text(),'Demo')]");
     private final By locatorSetBalance = By.xpath("//button[contains(text(),'Set Balance')]");
@@ -29,143 +38,91 @@ public class AccountPage extends AbstractPage{
     private final By locatorCurrencyConverter = By.xpath("//a[text()='Currency Converter']");
     private final By locatorTradersCalculator = By.xpath("//a[text()=\"Trader's Calculator\"]");
 
-    @FindBy(id = "amount")
-    private WebElement inputAreaBalance;
-
-    @FindBy(id = "alias")
-    private WebElement inputAreaName;
-
-    @FindBy(xpath = "//form/button")
-    private WebElement saveChanges;
-
-    @FindBy(xpath = "//button[text()='Rename Account']")
-    private WebElement renameAccout;
-
     public AccountPage(WebDriver driver){
         super(driver);
         PageFactory.initElements(this.driver, this);
     }
 
-    public int getBalance(){
-        WebElement demoTab = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorDemoTab));
+    public AccountPage openDemoTab(){
+        WebElement demoTab = wait.waitUntilpresenceOfElementLocated(locatorDemoTab);
         demoTab.click();
+        logger.info("AccountPage: openDemoTab");
+        return this;
+    }
 
-        WebElement balance = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorBalance));
+    public int getBalance(){
+        openDemoTab();
+        WebElement balance = wait.waitUntilpresenceOfElementLocated(locatorBalance);
         String balanceValue = balance.getAttribute("innerHTML").replaceAll(",","");
-
         logger.info("AccountPage: getBalance");
-
         return Integer.parseInt(balanceValue);
     }
 
-    public AccountPage setBalance(){
-        WebElement demoTab = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorDemoTab));
-        demoTab.click();
-
-        WebElement setBalanceButton = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorSetBalance));
+    public AccountPage setBalance(int balance){
+        openDemoTab();
+        WebElement setBalanceButton = wait.waitUntilpresenceOfElementLocated(locatorSetBalance);
         setBalanceButton.click();
-
         inputAreaBalance.clear();
-        inputAreaBalance.sendKeys(Integer.toString(balanceValue));
+        inputAreaBalance.sendKeys(Integer.toString(balance));
         saveChanges.click();
         driver.navigate().refresh();
-
         logger.info("AccountPage: setBalance");
-
         return this;
     }
 
     public String getAccountName(){
-        WebElement demoTab = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorDemoTab));
-        demoTab.click();
-
-        List<WebElement> name = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorAccName));
+        openDemoTab();
+        List<WebElement> name = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorAccName);
         String fullName = name.get(1).getText().toString();
-
         logger.info("AccountPage: getAccountName");
-
         return fullName.substring(0,fullName.indexOf(' '));
     }
 
-    public AccountPage renameAccount(){
-        WebElement demoTab = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorDemoTab));
-        demoTab.click();
-
-        List<WebElement> settings = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorSettings));
+    public AccountPage renameAccount(String name){
+        openDemoTab();
+        List<WebElement> settings = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorSettings);
         settings.get(1).click();
-
         driver.findElements(locatorRename).get(1).click();
-
         inputAreaName.clear();
-        inputAreaName.sendKeys("NewAccName");
-
+        inputAreaName.sendKeys(name);
         renameAccout.click();
         driver.navigate().refresh();
-
         logger.info("AccountPage: renameAccount");
-
         return this;
     }
 
     public TradingPage startTraiding(){
-        WebElement demoTab = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorDemoTab));
-        demoTab.click();
-
-        WebElement trade = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorTrade));
+        openDemoTab();
+        WebElement trade = wait.waitUntilpresenceOfElementLocated(locatorTrade);
         trade.click();
-
-        WebElement tradeButton = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorExnessTerminal));
+        WebElement tradeButton = wait.waitUntilpresenceOfElementLocated(locatorExnessTerminal);
         String URLToClick = tradeButton.getAttribute("href");
         driver.navigate().to(URLToClick);
-
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorTraidingPageBody));
-
+        wait.waitUntilpresenceOfElementLocated(locatorTraidingPageBody);
         logger.info("AccountPage: startTraiding");
-
         return new TradingPage(driver);
     }
 
     public AccountPage openHelpDropDown(){
-        WebElement help = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorHelp));
+        WebElement help = wait.waitUntilpresenceOfElementLocated(locatorHelp);
         help.click();
-
         logger.info("AccountPage: openHelpDropDown");
-
         return this;
     }
 
     public CurrencyConverterPage openCurrencyConverter(){
-        WebElement currencyConverter = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorCurrencyConverter));
+        WebElement currencyConverter = wait.waitUntilpresenceOfElementLocated(locatorCurrencyConverter);
         String URLToClick = currencyConverter.getAttribute("href");
         driver.navigate().to(URLToClick);
-
         logger.info("AccountPage: openCurrencyConverter");
-
         return new CurrencyConverterPage(driver);
     }
 
     public TradersCalculatorPage openTradersCalculator(){
-        WebElement tradersCalculator = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorTradersCalculator));
+        WebElement tradersCalculator = wait.waitUntilpresenceOfElementLocated(locatorTradersCalculator);
         String URLToClick = tradersCalculator.getAttribute("href");
         driver.navigate().to(URLToClick);
-
         logger.info("AccountPage: openTradersCalculator");
-
         return new TradersCalculatorPage(driver);
     }
 

@@ -17,7 +17,7 @@ public class AdditionalFuncsTest extends CommonConditions{
                 .signIn(testUser)
                 .openHelpDropDown()
                 .openCurrencyConverter()
-                .setAmount();
+                .setAmount("0");
 
         Assert.assertEquals(currencyConverterPage.areAllInputsSetToNull(), true);
     }
@@ -30,7 +30,7 @@ public class AdditionalFuncsTest extends CommonConditions{
                 .signIn(testUser)
                 .openHelpDropDown()
                 .openTradersCalculator()
-                .inputLotAmount();
+                .inputLotAmount("0");
 
         Assert.assertEquals(tradersCalculatorPage.getLotAmount(), "0.01");
     }

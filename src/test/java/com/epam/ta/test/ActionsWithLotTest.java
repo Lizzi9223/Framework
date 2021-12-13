@@ -21,7 +21,7 @@ public class ActionsWithLotTest extends CommonConditions{
                 .startTraiding();
 
         int initialCount = tradingPage.getAllTabsCount();
-        tradingPage = tradingPage.addNewTab();
+        tradingPage = tradingPage.addNewTab("BTC/USD");
         int finalCount = tradingPage.getAllTabsCount();
         Assert.assertEquals(finalCount-initialCount,1);
     }
@@ -30,15 +30,15 @@ public class ActionsWithLotTest extends CommonConditions{
     public void buyLot(){
         int initialCount = tradingPage.getOrdersCount();
         tradingPage = tradingPage
-                 .buyLots();
+                 .buyLots(1);
         int finalCount = tradingPage.getOrdersCount();
         Assert.assertEquals(finalCount-initialCount,1);
     }
 
     @Test(description = "edit last lot", priority = 3)
     public void editLastLot(){
-        tradingPage = tradingPage.editLastLot();
-        String value = tradingPage.getTakeProfitValueOfLast();
+        tradingPage = tradingPage.editLastLot("1000000.88");
+        String value = tradingPage.getTakeProfitValueOfLastOrder();
         Assert.assertEquals(value, "1000000.88");
     }
 
@@ -51,7 +51,7 @@ public class ActionsWithLotTest extends CommonConditions{
 
     @Test(description = "add company to faves", priority = 5)
     public void addCompanyToFaves(){
-        tradingPage = tradingPage.addCompanyToFaves();
+        tradingPage = tradingPage.addCompanyToFaves("APPL");
         Assert.assertEquals(tradingPage.isCompanyInFaves(), true);
     }
 }

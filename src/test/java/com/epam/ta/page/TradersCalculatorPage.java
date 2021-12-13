@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TradersCalculatorPage extends AbstractPage{
 
@@ -19,24 +17,18 @@ public class TradersCalculatorPage extends AbstractPage{
         PageFactory.initElements(this.driver, this);
     }
 
-    public TradersCalculatorPage inputLotAmount(){
-        WebElement lotInput = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorLotInput));
+    public TradersCalculatorPage inputLotAmount(String amount){
+        WebElement lotInput = wait.waitUntilpresenceOfElementLocated(locatorLotInput);
         lotInput.clear();
-        lotInput.sendKeys("0");
-
-        WebElement calcButton = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorCalculateButton));
+        lotInput.sendKeys(amount);
+        WebElement calcButton = wait.waitUntilpresenceOfElementLocated(locatorCalculateButton);
         calcButton.click();
-
         logger.info("TradersCalculatorPage: inputLotAmount");
-
         return this;
     }
 
     public String getLotAmount(){
-        WebElement lotInput = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorLotInput));
+        WebElement lotInput = wait.waitUntilpresenceOfElementLocated(locatorLotInput);
         logger.info("TradersCalculatorPage: getLotAmount");
         return lotInput.getAttribute("value");
     }

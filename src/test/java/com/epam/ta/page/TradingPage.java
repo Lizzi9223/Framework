@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -39,171 +37,115 @@ public class TradingPage extends AbstractPage{
         PageFactory.initElements(this.driver, this);
     }
 
-    public TradingPage addNewTab(){
-        WebElement addTab = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorAddTab));
+    public TradingPage addNewTab(String tabName){
+        WebElement addTab = wait.waitUntilpresenceOfElementLocated(locatorAddTab);
         addTab.click();
-
-        WebElement searchInput = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorSearchInput));
-        searchInput.sendKeys("BTC/USD");
-
-        WebElement searchResult = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorSearchResult));
+        WebElement searchInput = wait.waitUntilpresenceOfElementLocated(locatorSearchInput);
+        searchInput.sendKeys(tabName);
+        WebElement searchResult = wait.waitUntilpresenceOfElementLocated(locatorSearchResult);
         searchResult.click();
-
         logger.info("TradingPage: addNewTab");
-
         return this;
     }
 
-    public TradingPage buyLots(){
-        WebElement addLots = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorInputLots));
+    public TradingPage buyLots(int amount){
+        WebElement addLots = wait.waitUntilpresenceOfElementLocated(locatorInputLots);
         addLots.clear();
-        addLots.sendKeys("1");
-
+        addLots.sendKeys(Integer.toString(amount));
         WebElement buyButton = driver.findElement(locatorBuyButton);
         buyButton.click();
-
         driver.navigate().refresh();
-
         logger.info("TradingPage: buyLots");
-
         return this;
     }
 
-    public TradingPage editLastLot(){
-        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+    public TradingPage editLastLot(String takeProfitValue){
+        List<WebElement> navMenu = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorNavMenu);
         WebElement portfolioButton = navMenu.get(1);
         portfolioButton.click();
-
-        WebElement editFirstOrderButton = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorControlButtons));
+        WebElement editFirstOrderButton = wait.waitUntilpresenceOfElementLocated(locatorControlButtons);
         editFirstOrderButton.click();
-
         WebElement takeProfitInput = driver.findElement(locatorTakeProfitInput);
         takeProfitInput.clear();
-        takeProfitInput.sendKeys("1000000.88");
-
+        takeProfitInput.sendKeys(takeProfitValue);
         WebElement applyTakeProfitButton = driver.findElement(locatorApplyTakeProfitButton);
         applyTakeProfitButton.click();
-
         portfolioButton.click();
-
         logger.info("TradingPage: editLastLot");
-
         return this;
     }
 
     public TradingPage deleteAllLots(){
-        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+        List<WebElement> navMenu = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorNavMenu);
         WebElement portfolioButton = navMenu.get(1);
         portfolioButton.click();
-
         int count = getOrdersCount();
         for (int i=0;i<count;i++){
-            List<WebElement> controlButtons = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                    .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorControlButtons));
+            List<WebElement> controlButtons = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorControlButtons);
             controlButtons.get(1).click();
         }
-
         portfolioButton.click();
-
         logger.info("TradingPage: deleteAllLots");
-
         return this;
     }
 
-    public TradingPage addCompanyToFaves(){
-        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+    public TradingPage addCompanyToFaves(String company){
+        List<WebElement> navMenu = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorNavMenu);
         WebElement watchListButton = navMenu.get(0);
         watchListButton.click();
-
-        WebElement dropDown = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorCompaniesDropdown));
+        WebElement dropDown = wait.waitUntilpresenceOfElementLocated(locatorCompaniesDropdown);
         dropDown.click();
-        WebElement allCompanies = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorAllCompanies));
+        WebElement allCompanies = wait.waitUntilpresenceOfElementLocated(locatorAllCompanies);
         allCompanies.click();
-
         WebElement input = driver.findElement(locatorWatchlistInput);
         input.clear();
-        input.sendKeys("APPL");
-
-        WebElement star = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorStar));
+        input.sendKeys(company);
+        WebElement star = wait.waitUntilpresenceOfElementLocated(locatorStar);
         star.click();
-
         watchListButton.click();
-
         logger.info("TradingPage: addCompanyToFaves");
-
         return this;
     }
 
     public boolean isCompanyInFaves(){
-        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+        List<WebElement> navMenu = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorNavMenu);
         WebElement watchListButton = navMenu.get(0);
         watchListButton.click();
-
-        WebElement dropDown = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorCompaniesDropdown));
+        WebElement dropDown = wait.waitUntilpresenceOfElementLocated(locatorCompaniesDropdown);
         dropDown.click();
-        WebElement faveCompanies = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorFaveCompanies));
+        WebElement faveCompanies = wait.waitUntilpresenceOfElementLocated(locatorFaveCompanies);
         faveCompanies.click();
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorFavesList));
-
+        wait.waitUntilpresenceOfElementLocated(locatorFavesList);
         int size = driver.findElements(locatorCompany).size();
-
         logger.info("TradingPage: isCompanyInFaves");
-
         return (size != 0);
     }
 
     public int getOrdersCount(){
-        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+        List<WebElement> navMenu = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorNavMenu);
         WebElement portfolioButton = navMenu.get(1);
         portfolioButton.click();
-
         List<WebElement> ordersList = driver.findElements(locatorOrdersList);
         portfolioButton.click();
-
         logger.info("TradingPage: getOrdersCount");
-
         return ordersList.size();
     }
 
     public int getAllTabsCount(){
-        List<WebElement> allTabs = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorAllTabs));
-
+        List<WebElement> allTabs = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorAllTabs);
         logger.info("TradingPage: getAllTabsCount");
-
         return allTabs.size();
     }
 
-    public String getTakeProfitValueOfLast(){
-        List<WebElement> navMenu = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorNavMenu));
+    public String getTakeProfitValueOfLastOrder(){
+        List<WebElement> navMenu = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorNavMenu);
         WebElement portfolioButton = navMenu.get(1);
         portfolioButton.click();
-
         driver.findElement(locatorMoreInfo).click();
         String takeProfitValue = driver.findElement(locatorTakeProfitValue).getText().replace(",","");
         driver.findElement(locatorMoreInfo).click();
-
         portfolioButton.click();
-
         logger.info("TradingPage: getTakeProfitValueOfLast");
-
         return takeProfitValue;
     }
 

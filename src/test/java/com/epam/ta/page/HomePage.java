@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends AbstractPage{
 
@@ -26,8 +24,7 @@ public class HomePage extends AbstractPage{
     }
 
     public SignInPage goToSignInPage(){
-        WebElement signInButton = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorSignInButton));
+        WebElement signInButton = wait.waitUntilpresenceOfElementLocated(locatorSignInButton);
         String URLToClick = signInButton.getAttribute("href");
         driver.navigate().to(URLToClick);
         logger.info("HomePage: goToSignInPage");

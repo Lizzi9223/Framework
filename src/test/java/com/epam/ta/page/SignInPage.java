@@ -6,8 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -36,8 +34,7 @@ public class SignInPage extends AbstractPage{
     }
 
     public AccountPage signIn(User user){
-        WebElement loginInput = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorLoginInput));
+        WebElement loginInput = wait.waitUntilpresenceOfElementLocated(locatorLoginInput);
         loginInput.sendKeys(user.getEmail());
         passwordInput.sendKeys(user.getPassword());
         continueButton.click();

@@ -17,7 +17,7 @@ public class UserAccessTests extends CommonConditions {
 				.openPage()
 				.goToSignInPage()
 				.signIn(testUser)
-				.setBalance();
+				.setBalance(1000);
 
 		Assert.assertEquals(accountPage.getBalance(), 1000);
 	}
@@ -28,7 +28,7 @@ public class UserAccessTests extends CommonConditions {
 				.openPage()
 				.goToSignInPage()
 				.signIn(testUser)
-				.renameAccount();
+				.renameAccount("NewAccName");
 
 		Assert.assertEquals(accountPage.getAccountName(), "NewAccName");
 	}

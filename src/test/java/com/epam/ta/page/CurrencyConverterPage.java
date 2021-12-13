@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -21,20 +19,16 @@ public class CurrencyConverterPage extends AccountPage{
         PageFactory.initElements(this.driver, this);
     }
 
-    public CurrencyConverterPage setAmount(){
-        WebElement amountInput = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(locatorAmountInput));
+    public CurrencyConverterPage setAmount(String amount){
+        WebElement amountInput = wait.waitUntilpresenceOfElementLocated(locatorAmountInput);
         amountInput.clear();
-        amountInput.sendKeys("0");
-
+        amountInput.sendKeys(amount);
         logger.info("CurrencyConverterPage: setAmount");
-
         return this;
     }
 
     public boolean areAllInputsSetToNull(){
-        List<WebElement> allAmountInputs = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorAllAmountInputs));
+        List<WebElement> allAmountInputs = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorAllAmountInputs);
         for(int i=0; i<allAmountInputs.size();i++){
             if(!allAmountInputs.get(i).getAttribute("value").equals("0")){
                 return false;
