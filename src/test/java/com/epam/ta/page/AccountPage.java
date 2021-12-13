@@ -54,6 +54,9 @@ public class AccountPage extends AbstractPage{
         WebElement balance = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfElementLocated(locatorBalance));
         String balanceValue = balance.getAttribute("innerHTML").replaceAll(",","");
+
+        logger.info("AccountPage: getBalance");
+
         return Integer.parseInt(balanceValue);
     }
 
@@ -71,6 +74,8 @@ public class AccountPage extends AbstractPage{
         saveChanges.click();
         driver.navigate().refresh();
 
+        logger.info("AccountPage: setBalance");
+
         return this;
     }
 
@@ -82,6 +87,8 @@ public class AccountPage extends AbstractPage{
         List<WebElement> name = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorAccName));
         String fullName = name.get(1).getText().toString();
+
+        logger.info("AccountPage: getAccountName");
 
         return fullName.substring(0,fullName.indexOf(' '));
     }
@@ -103,6 +110,8 @@ public class AccountPage extends AbstractPage{
         renameAccout.click();
         driver.navigate().refresh();
 
+        logger.info("AccountPage: renameAccount");
+
         return this;
     }
 
@@ -119,10 +128,11 @@ public class AccountPage extends AbstractPage{
                 .until(ExpectedConditions.presenceOfElementLocated(locatorExnessTerminal));
         String URLToClick = tradeButton.getAttribute("href");
         driver.navigate().to(URLToClick);
-        logger.info("Go to trading page");
 
         new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfElementLocated(locatorTraidingPageBody));
+
+        logger.info("AccountPage: startTraiding");
 
         return new TradingPage(driver);
     }
@@ -131,6 +141,9 @@ public class AccountPage extends AbstractPage{
         WebElement help = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfElementLocated(locatorHelp));
         help.click();
+
+        logger.info("AccountPage: openHelpDropDown");
+
         return this;
     }
 
@@ -139,6 +152,9 @@ public class AccountPage extends AbstractPage{
                 .until(ExpectedConditions.presenceOfElementLocated(locatorCurrencyConverter));
         String URLToClick = currencyConverter.getAttribute("href");
         driver.navigate().to(URLToClick);
+
+        logger.info("AccountPage: openCurrencyConverter");
+
         return new CurrencyConverterPage(driver);
     }
 
@@ -147,13 +163,16 @@ public class AccountPage extends AbstractPage{
                 .until(ExpectedConditions.presenceOfElementLocated(locatorTradersCalculator));
         String URLToClick = tradersCalculator.getAttribute("href");
         driver.navigate().to(URLToClick);
+
+        logger.info("AccountPage: openTradersCalculator");
+
         return new TradersCalculatorPage(driver);
     }
 
     @Override
     public AccountPage openPage(){
         driver.navigate().to(PAGE_URL);
-        logger.info("To open 'Account page' firstly u have to sign in");
+        logger.info("AccountPage: openPage");
         return this;
     }
 }

@@ -52,6 +52,8 @@ public class TradingPage extends AbstractPage{
                 .until(ExpectedConditions.presenceOfElementLocated(locatorSearchResult));
         searchResult.click();
 
+        logger.info("TradingPage: addNewTab");
+
         return this;
     }
 
@@ -65,6 +67,8 @@ public class TradingPage extends AbstractPage{
         buyButton.click();
 
         driver.navigate().refresh();
+
+        logger.info("TradingPage: buyLots");
 
         return this;
     }
@@ -88,6 +92,8 @@ public class TradingPage extends AbstractPage{
 
         portfolioButton.click();
 
+        logger.info("TradingPage: editLastLot");
+
         return this;
     }
 
@@ -105,6 +111,8 @@ public class TradingPage extends AbstractPage{
         }
 
         portfolioButton.click();
+
+        logger.info("TradingPage: deleteAllLots");
 
         return this;
     }
@@ -132,6 +140,8 @@ public class TradingPage extends AbstractPage{
 
         watchListButton.click();
 
+        logger.info("TradingPage: addCompanyToFaves");
+
         return this;
     }
 
@@ -152,6 +162,8 @@ public class TradingPage extends AbstractPage{
 
         int size = driver.findElements(locatorCompany).size();
 
+        logger.info("TradingPage: isCompanyInFaves");
+
         return (size != 0);
     }
 
@@ -163,12 +175,18 @@ public class TradingPage extends AbstractPage{
 
         List<WebElement> ordersList = driver.findElements(locatorOrdersList);
         portfolioButton.click();
+
+        logger.info("TradingPage: getOrdersCount");
+
         return ordersList.size();
     }
 
     public int getAllTabsCount(){
         List<WebElement> allTabs = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locatorAllTabs));
+
+        logger.info("TradingPage: getAllTabsCount");
+
         return allTabs.size();
     }
 
@@ -183,13 +201,16 @@ public class TradingPage extends AbstractPage{
         driver.findElement(locatorMoreInfo).click();
 
         portfolioButton.click();
+
+        logger.info("TradingPage: getTakeProfitValueOfLast");
+
         return takeProfitValue;
     }
 
     @Override
     protected AbstractPage openPage() {
         driver.navigate().to(PAGE_URL);
-        logger.info("To open 'Trading page' firstly u have to sign in");
+        logger.info("TradingPage: openPage");
         return this;
     }
 }

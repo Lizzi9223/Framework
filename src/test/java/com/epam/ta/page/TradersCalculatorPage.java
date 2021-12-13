@@ -29,19 +29,22 @@ public class TradersCalculatorPage extends AbstractPage{
                 .until(ExpectedConditions.presenceOfElementLocated(locatorCalculateButton));
         calcButton.click();
 
+        logger.info("TradersCalculatorPage: inputLotAmount");
+
         return this;
     }
 
     public String getLotAmount(){
         WebElement lotInput = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfElementLocated(locatorLotInput));
+        logger.info("TradersCalculatorPage: getLotAmount");
         return lotInput.getAttribute("value");
     }
 
     @Override
     public TradersCalculatorPage openPage(){
         driver.navigate().to(PAGE_URL);
-        logger.info("Trader's Calculator opened");
+        logger.info("TradersCalculatorPage: openPage");
         return this;
     }
 }

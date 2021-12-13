@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class ActionsWithLotTest extends CommonConditions{
 
-    User testUser = UserCreator.withCredentialsFromProperty();
+    private final User testUser = UserCreator.withCredentialsFromProperty();
     TradingPage tradingPage;
 
     @Test(description = "add tab", priority = 1)

@@ -26,6 +26,9 @@ public class CurrencyConverterPage extends AccountPage{
                 .until(ExpectedConditions.presenceOfElementLocated(locatorAmountInput));
         amountInput.clear();
         amountInput.sendKeys("0");
+
+        logger.info("CurrencyConverterPage: setAmount");
+
         return this;
     }
 
@@ -37,13 +40,14 @@ public class CurrencyConverterPage extends AccountPage{
                 return false;
             }
         }
+        logger.info("CurrencyConverterPage: areAllInputsSetToNull");
         return true;
     }
 
     @Override
     public CurrencyConverterPage openPage(){
         driver.navigate().to(PAGE_URL);
-        logger.info("Currency Converter opened");
+        logger.info("CurrencyConverterPage: openPage");
         return this;
     }
 }

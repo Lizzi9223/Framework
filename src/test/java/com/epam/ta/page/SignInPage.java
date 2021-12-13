@@ -31,7 +31,7 @@ public class SignInPage extends AbstractPage{
     @Override
     public SignInPage openPage(){
         driver.navigate().to(PAGE_URL);
-        logger.info("SignIn page opened");
+        logger.info("SignInPage: openPage");
         return this;
     }
 
@@ -41,7 +41,7 @@ public class SignInPage extends AbstractPage{
         loginInput.sendKeys(user.getEmail());
         passwordInput.sendKeys(user.getPassword());
         continueButton.click();
-        logger.info("SignIn performed");
+        logger.info("SignInPage: signIn");
         return new AccountPage(driver);
     }
 }

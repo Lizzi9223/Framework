@@ -21,7 +21,7 @@ public class HomePage extends AbstractPage{
     @Override
     public HomePage openPage(){
         driver.navigate().to(PAGE_URL);
-        logger.info("Home page opened");
+        logger.info("HomePage: openPage");
         return this;
     }
 
@@ -30,7 +30,7 @@ public class HomePage extends AbstractPage{
                 .until(ExpectedConditions.presenceOfElementLocated(locatorSignInButton));
         String URLToClick = signInButton.getAttribute("href");
         driver.navigate().to(URLToClick);
-        logger.info("Go to SignIn page");
+        logger.info("HomePage: goToSignInPage");
         return new SignInPage(driver);
     }
 }
