@@ -29,7 +29,7 @@ public class ActionsWithLotTest extends CommonConditions{
     @Test(description = "buy lot", priority = 2)
     public void buyLot(){
         int initialCount = tradingPage.getOrdersCount();
-        tradingPage = tradingPage.addNewTab()
+        tradingPage = tradingPage
                  .buyLots();
         int finalCount = tradingPage.getOrdersCount();
         Assert.assertEquals(finalCount-initialCount,1);

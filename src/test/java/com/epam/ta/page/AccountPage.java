@@ -25,6 +25,9 @@ public class AccountPage extends AbstractPage{
     private final By locatorSettings = By.xpath("//div[contains(@class,'AccountCogMenu')]");
     private final By locatorRename = By.xpath("//li/span[text()='Rename account']");
     private final By locatorAccName = By.xpath("//div[contains(@class,'AccountCards_topText')]/div");
+    private final By locatorHelp = By.xpath("//*[contains(@class,'HeaderDropDown_component')]");
+    private final By locatorCurrencyConverter = By.xpath("//a[text()='Currency Converter']");
+    private final By locatorTradersCalculator = By.xpath("//a[text()=\"Trader's Calculator\"]");
 
     @FindBy(id = "amount")
     private WebElement inputAreaBalance;
@@ -122,6 +125,29 @@ public class AccountPage extends AbstractPage{
                 .until(ExpectedConditions.presenceOfElementLocated(locatorTraidingPageBody));
 
         return new TradingPage(driver);
+    }
+
+    public AccountPage openHelpDropDown(){
+        WebElement help = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorHelp));
+        help.click();
+        return this;
+    }
+
+    public CurrencyConverterPage openCurrencyConverter(){
+        WebElement currencyConverter = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorCurrencyConverter));
+        String URLToClick = currencyConverter.getAttribute("href");
+        driver.navigate().to(URLToClick);
+        return new CurrencyConverterPage(driver);
+    }
+
+    public TradersCalculatorPage openTradersCalculator(){
+        WebElement tradersCalculator = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(locatorTradersCalculator));
+        String URLToClick = tradersCalculator.getAttribute("href");
+        driver.navigate().to(URLToClick);
+        return new TradersCalculatorPage(driver);
     }
 
     @Override
