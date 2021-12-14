@@ -8,8 +8,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ActionsWithLotTest extends CommonConditions{
+    private final String TAB_NAME = "BTC/USD";
+    private final String COMPANY_NAME = "APPL";
+    private final String TAKE_PROFIT_VALUE = "1000000.88";
+    private final int LOTS_AMOUNT = 1;
 
-    private final User testUser = UserCreator.withCredentialsFromProperty();
     TradingPage tradingPage;
 
     @Test(description = "add tab", priority = 1)
@@ -17,11 +20,11 @@ public class ActionsWithLotTest extends CommonConditions{
         tradingPage = new HomePage(driver)
                 .openPage()
                 .goToSignInPage()
-                .signIn(testUser)
+                .signIn(TEST_USER)
                 .startTraiding();
 
         int initialCount = tradingPage.getAllTabsCount();
-        tradingPage = tradingPage.addNewTab("BTC/USD");
+        tradingPage = tradingPage.addNewTab(TAB_NAME);
         int finalCount = tradingPage.getAllTabsCount();
         Assert.assertEquals(finalCount-initialCount,1);
     }
@@ -30,16 +33,16 @@ public class ActionsWithLotTest extends CommonConditions{
     public void buyLot(){
         int initialCount = tradingPage.getOrdersCount();
         tradingPage = tradingPage
-                 .buyLots(1);
+                 .buyLots(LOTS_AMOUNT);
         int finalCount = tradingPage.getOrdersCount();
-        Assert.assertEquals(finalCount-initialCount,1);
+        Assert.assertEquals(finalCount-initialCount,LOTS_AMOUNT);
     }
 
     @Test(description = "edit last lot", priority = 3)
     public void editLastLot(){
-        tradingPage = tradingPage.editLastLot("1000000.88");
+        tradingPage = tradingPage.editLastLot(TAKE_PROFIT_VALUE);
         String value = tradingPage.getTakeProfitValueOfLastOrder();
-        Assert.assertEquals(value, "1000000.88");
+        Assert.assertEquals(value, TAKE_PROFIT_VALUE);
     }
 
     @Test(description = "delete all lots", priority = 4)
@@ -51,7 +54,7 @@ public class ActionsWithLotTest extends CommonConditions{
 
     @Test(description = "add company to faves", priority = 5)
     public void addCompanyToFaves(){
-        tradingPage = tradingPage.addCompanyToFaves("APPL");
+        tradingPage = tradingPage.addCompanyToFaves(COMPANY_NAME);
         Assert.assertEquals(tradingPage.isCompanyInFaves(), true);
     }
 }

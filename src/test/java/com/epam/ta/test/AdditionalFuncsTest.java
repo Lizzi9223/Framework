@@ -7,17 +7,18 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class AdditionalFuncsTest extends CommonConditions{
-    private final User testUser = UserCreator.withCredentialsFromProperty();
+    private final String ZERO_STRING = "0";
+    private final String AFTER_VALIDATION_VALUE = "0.01";
 
     @Test(description = "when amount is zero, other fields must be zero", priority = 1)
     public void currencyConverterWithZeroValue(){
         CurrencyConverterPage currencyConverterPage = new HomePage(driver)
                 .openPage()
                 .goToSignInPage()
-                .signIn(testUser)
+                .signIn(TEST_USER)
                 .openHelpDropDown()
                 .openCurrencyConverter()
-                .setAmount("0");
+                .setAmount(ZERO_STRING);
 
         Assert.assertEquals(currencyConverterPage.areAllInputsSetToNull(), true);
     }
@@ -27,11 +28,11 @@ public class AdditionalFuncsTest extends CommonConditions{
         TradersCalculatorPage tradersCalculatorPage = new HomePage(driver)
                 .openPage()
                 .goToSignInPage()
-                .signIn(testUser)
+                .signIn(TEST_USER)
                 .openHelpDropDown()
                 .openTradersCalculator()
-                .inputLotAmount("0");
+                .inputLotAmount(ZERO_STRING);
 
-        Assert.assertEquals(tradersCalculatorPage.getLotAmount(), "0.01");
+        Assert.assertEquals(tradersCalculatorPage.getLotAmount(), AFTER_VALIDATION_VALUE);
     }
 }

@@ -12,6 +12,7 @@ import org.testng.annotations.*;
 @Listeners({TestListener.class})
 public class CommonConditions {
     protected WebDriver driver;
+    protected final User TEST_USER = UserCreator.withCredentialsFromProperty();
 
     @BeforeClass()
     public void setUp(){
