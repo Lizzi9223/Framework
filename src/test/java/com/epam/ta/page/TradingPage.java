@@ -14,7 +14,8 @@ public class TradingPage extends AbstractPage{
     private final By locatorAddTab = By.className("add-tab-button");
     private final By locatorSearchInput = By.xpath("//input[@type='search']");
     private final By locatorSearchResult = By.xpath("//div[contains(@class,'watchlistItem')]");
-    private final By locatorInputLots = By.xpath("//*[contains(@class,'TradingPage__Order')]//input[contains(@value,'0')]");
+    //private final By locatorInputLots = By.xpath("//*[contains(@class,'TradingPage__Order')]//input[contains(@value,'0')]");
+    private final By locatorInputLots = By.xpath("//*[contains(@class,'TradingPage__Order')]//div[text()='lots']/preceding-sibling::input");
     private final By locatorBuyButton = By.xpath("//*[contains(@class,'OrderButton__Panel')]");
     private final By locatorNavMenu = By.xpath("//*[contains(@class,'navButton')]");
     private final By locatorControlButtons = By.xpath("//div[contains(@class,'close-button')]");
