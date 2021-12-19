@@ -3,17 +3,17 @@
 <suite name="All tests" verbose="1" parallel="false">
     <test name = "UserAccessTests">
         <classes>
-            <class name = "com.epam.ta.test.UserAccessTests" />
+            <class name = "by.epam.qa.framework.test.UserAccessTests" />
         </classes>
     </test>
     <test name = "ActionsWithLotTest">
         <classes>
-            <class name = "com.epam.ta.test.ActionsWithLotTest" />
+            <class name = "by.epam.qa.framework.test.ActionsWithLotTest" />
         </classes>
     </test>
     <test name = "AdditionalFuncsTest">
         <classes>
-            <class name = "com.epam.ta.test.AdditionalFuncsTest" />
+            <class name = "by.epam.qa.framework.test.AdditionalFuncsTest" />
         </classes>
     </test>
 </suite>
