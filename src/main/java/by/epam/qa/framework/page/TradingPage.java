@@ -30,7 +30,7 @@ public class TradingPage extends AbstractPage{
     private final By locatorStar = By.xpath("//div[contains(@class,'favoritesStar')]");
     private final By locatorCompaniesDropdown = By.xpath("//div[contains(@class,'NavigationMenuPanel')]//button");
     private final By locatorAllCompanies = By.xpath("//div[text()='All']");
-    private final By locatorFaveCompanies = By.xpath("//div[text()='Favorites']");
+    private final By locatorFavouriteCompanies = By.xpath("//div[text()='Favorites']");
     private final By locatorCompany = By.xpath("//div[contains(text(),'AAPL')]");
     private final By locatorFavouriteCompaniesList = By.xpath("//div[contains(@class,'WatchList')]");
     private final By locatorAllFavouriteCompaniesOneByOne = By.xpath("//div[@class='watchlistSymbol']");
@@ -144,7 +144,7 @@ public class TradingPage extends AbstractPage{
     }
 
     public TradingPage favouriteCompaniesClick(){
-        WebElement faveCompanies = wait.waitUntilpresenceOfElementLocated(locatorFaveCompanies);
+        WebElement faveCompanies = wait.waitUntilpresenceOfElementLocated(locatorFavouriteCompanies);
         faveCompanies.click();
         return this;
     }

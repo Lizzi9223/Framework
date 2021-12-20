@@ -57,7 +57,7 @@ public class ActionsWithLotTest extends BaseConditions {
     }
 
     @Test(description = "add company to faves", priority = 5)
-    public void addCompanyToFaves(){
+    public void addCompanyToFavourites(){
         traidingPageService = traidingPageService.addCompanyToFavourites(COMPANY_NAME);
         Assert.assertEquals(traidingPageService.isCompanyInListOfFavourites(TAB_NAME_AFTER_ADD), true);
     }

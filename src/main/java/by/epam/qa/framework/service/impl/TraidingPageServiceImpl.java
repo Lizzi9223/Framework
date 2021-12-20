@@ -63,6 +63,7 @@ public class TraidingPageServiceImpl extends AbstractService {
     public boolean isCompanyInListOfFavourites(String companyName){
         List<String> allCompaniesNames = tradingPage
                     .menuWatchlistClick()
+                    .dropDownCompaniesClick()
                     .favouriteCompaniesClick()
                     .getAllFavevouriteCompaniesNames();
         for (String name : allCompaniesNames){
