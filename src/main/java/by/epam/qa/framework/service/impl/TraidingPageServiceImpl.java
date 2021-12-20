@@ -61,7 +61,9 @@ public class TraidingPageServiceImpl extends AbstractService {
     }
 
     public boolean isCompanyInListOfFavourites(String companyName){
-        List<String> allCompaniesNames = tradingPage.getAllFavevouriteCompaniesNames();
+        List<String> allCompaniesNames = tradingPage
+                    .menuWatchlistClick()
+                    .getAllFavevouriteCompaniesNames();
         for (String name : allCompaniesNames){
             if(name.equals(companyName)){
                 return true;
@@ -70,7 +72,7 @@ public class TraidingPageServiceImpl extends AbstractService {
         return false;
     }
 
-    public int getFavouriteCompaniesCoune(){
+    public int getFavouriteCompaniesCount(){
         int count = tradingPage
                 .menuWatchlistClick()
                 .dropDownCompaniesClick()

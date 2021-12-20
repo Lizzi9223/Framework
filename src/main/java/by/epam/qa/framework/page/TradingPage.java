@@ -32,7 +32,7 @@ public class TradingPage extends AbstractPage{
     private final By locatorAllCompanies = By.xpath("//div[text()='All']");
     private final By locatorFaveCompanies = By.xpath("//div[text()='Favorites']");
     private final By locatorCompany = By.xpath("//div[contains(text(),'AAPL')]");
-    private final By locatorFavevouriteCompaniesList = By.xpath("//div[contains(@class,'WatchList')]");
+    private final By locatorFavouriteCompaniesList = By.xpath("//div[contains(@class,'WatchList')]");
     private final By locatorAllFavouriteCompaniesOneByOne = By.xpath("//div[@class='watchlistSymbol']");
 
     public TradingPage(WebDriver driver){
@@ -150,7 +150,7 @@ public class TradingPage extends AbstractPage{
     }
 
     public int getFavevouriteCompaniesCount(){
-        wait.waitUntilpresenceOfElementLocated(locatorFavevouriteCompaniesList);
+        wait.waitUntilpresenceOfElementLocated(locatorFavouriteCompaniesList);
         logger.info("TradingPage: getFavevouriteCompaniesCount");
         return driver.findElements(locatorCompany).size();
     }
