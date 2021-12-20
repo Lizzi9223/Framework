@@ -149,13 +149,13 @@ public class TradingPage extends AbstractPage{
         return this;
     }
 
-    public int getFavevouriteCompaniesCount(){
+    public int getFavouriteCompaniesCount(){
         wait.waitUntilpresenceOfElementLocated(locatorFavouriteCompaniesList);
-        logger.info("TradingPage: getFavevouriteCompaniesCount");
+        logger.info("TradingPage: getFavouriteCompaniesCount");
         return driver.findElements(locatorCompany).size();
     }
 
-    public List<String> getAllFavevouriteCompaniesNames(){
+    public List<String> getAllFavouriteCompaniesNames(){
         List<String> names = new ArrayList<>();
         List<WebElement> companies = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorAllFavouriteCompaniesOneByOne);
         for(WebElement company : companies){

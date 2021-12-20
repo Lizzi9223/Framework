@@ -1,7 +1,6 @@
 package by.epam.qa.framework.service.impl;
 
 
-import by.epam.qa.framework.page.AccountPage;
 import by.epam.qa.framework.page.TradingPage;
 import org.openqa.selenium.WebDriver;
 
@@ -65,11 +64,9 @@ public class TraidingPageServiceImpl extends AbstractService {
                     .menuWatchlistClick()
                     .dropDownCompaniesClick()
                     .favouriteCompaniesClick()
-                    .getAllFavevouriteCompaniesNames();
-        for (String name : allCompaniesNames){
-            if(name.equals(companyName)){
-                return true;
-            }
+                    .getAllFavouriteCompaniesNames();
+        if (allCompaniesNames.contains(companyName)){
+            return true;
         }
         return false;
     }
@@ -79,7 +76,7 @@ public class TraidingPageServiceImpl extends AbstractService {
                 .menuWatchlistClick()
                 .dropDownCompaniesClick()
                 .favouriteCompaniesClick()
-                .getFavevouriteCompaniesCount();
+                .getFavouriteCompaniesCount();
         return count;
     }
 
