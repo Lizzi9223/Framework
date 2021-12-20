@@ -33,28 +33,28 @@ public class ActionsWithLotTest extends BaseConditions {
         }
     }
 
-//    @Test(description = "buy lot", priority = 2)
-//    public void buyLot(){
-//        int initialCount = traidingPageService.getOrdersCount();
-//        traidingPageService = traidingPageService
-//                 .buyLots(LOTS_AMOUNT);
-//        int finalCount = traidingPageService.getOrdersCount();
-//        Assert.assertEquals(finalCount-initialCount,LOTS_AMOUNT);
-//    }
-//
-//    @Test(description = "edit last lot", priority = 3)
-//    public void editLastLot(){
-//        traidingPageService = traidingPageService.editLastLot(TAKE_PROFIT_VALUE);
-//        String value = traidingPageService.getTakeProfitValueOfLastOrder();
-//        Assert.assertEquals(value, TAKE_PROFIT_VALUE);
-//    }
-//
-//    @Test(description = "delete all lots", priority = 4)
-//    public void deleteAllLots(){
-//        traidingPageService=traidingPageService.deleteAllLots();
-//        int finalCount = traidingPageService.getOrdersCount();
-//        Assert.assertEquals(finalCount, 0);
-//    }
+    @Test(description = "buy lot", priority = 2)
+    public void buyLot(){
+        int initialCount = traidingPageService.getOrdersCount();
+        traidingPageService = traidingPageService
+                 .buyLots(LOTS_AMOUNT);
+        int finalCount = traidingPageService.getOrdersCount();
+        Assert.assertEquals(finalCount-initialCount,LOTS_AMOUNT);
+    }
+
+    @Test(description = "edit last lot", priority = 3)
+    public void editLastLot(){
+        traidingPageService = traidingPageService.editLastLot(TAKE_PROFIT_VALUE);
+        String value = traidingPageService.getTakeProfitValueOfLastOrder();
+        Assert.assertEquals(value, TAKE_PROFIT_VALUE);
+    }
+
+    @Test(description = "delete all lots", priority = 4)
+    public void deleteAllLots(){
+        traidingPageService=traidingPageService.deleteAllLots();
+        int finalCount = traidingPageService.getOrdersCount();
+        Assert.assertEquals(finalCount, 0);
+    }
 
     @Test(description = "add company to faves", priority = 5)
     public void addCompanyToFavourites(){
