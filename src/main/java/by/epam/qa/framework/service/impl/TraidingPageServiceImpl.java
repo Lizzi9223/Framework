@@ -27,7 +27,20 @@ public class TraidingPageServiceImpl extends AbstractService {
         tradingPage = tradingPage
                 .addLotsSendKeys(amount)
                 .buyLotsClick();
+
         return this;
+    }
+
+    public List<String> getBuyLotsInformation(){
+        List<String> ordersInformation = tradingPage
+                .menuPortfolioClick()
+                .getBuyLotsInformation();
+        tradingPage = tradingPage.menuPortfolioClick();
+        return ordersInformation;
+    }
+
+    public String getLastBuyLotInformation(){
+        return getBuyLotsInformation().get(0);
     }
 
     public TraidingPageServiceImpl editLastLot(String takeProfitValue){

@@ -34,6 +34,7 @@ public class TradingPage extends AbstractPage{
     private final By locatorCompany = By.xpath("//div[contains(text(),'AAPL')]");
     private final By locatorFavouriteCompaniesList = By.xpath("//div[contains(@class,'WatchList')]");
     private final By locatorAllFavouriteCompaniesOneByOne = By.xpath("//div[@class='watchlistSymbol']");
+    private final By locatorBuyOrderInformation = By.xpath("//div[contains(@class,'icon-buy')]/ancestor::div[contains(@class,'OrderInformationDesktop__Flex')]");
 
     public TradingPage(WebDriver driver){
         super(driver);
@@ -72,6 +73,16 @@ public class TradingPage extends AbstractPage{
         driver.navigate().refresh();
         logger.info("TradingPage: buyLots");
         return this;
+    }
+
+    public List<String> getBuyLotsInformation(){
+        List<String> ordersInformation = new ArrayList<>();
+        List<WebElement> orders = wait.waitUntilpresenceOfAllElementsLocatedBy(locatorBuyOrderInformation);
+        for (WebElement order : orders){
+            ordersInformation.add(order.getText());
+        }
+        logger.info("TradingPage: getBuyLotsInformation");
+        return ordersInformation;
     }
 
     public TradingPage menuPortfolioClick(){

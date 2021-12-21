@@ -11,6 +11,7 @@ public class ActionsWithLotTest extends BaseConditions {
     private final String COMPANY_NAME = "AAPL";
     private final String TAKE_PROFIT_VALUE = "1000000.88";
     private final int LOTS_AMOUNT = 1;
+    private final String LOT_INFORMATION = "Buy, 1 lot";
 
     private TraidingPageServiceImpl traidingPageService;
 
@@ -39,7 +40,9 @@ public class ActionsWithLotTest extends BaseConditions {
         traidingPageService = traidingPageService
                  .buyLots(LOTS_AMOUNT);
         int finalCount = traidingPageService.getOrdersCount();
-        Assert.assertEquals(finalCount-initialCount,LOTS_AMOUNT);
+        if(finalCount-initialCount==LOTS_AMOUNT){
+            Assert.assertEquals(traidingPageService.getLastBuyLotInformation(),LOT_INFORMATION);
+        }
     }
 
     @Test(description = "edit last lot", priority = 3)
