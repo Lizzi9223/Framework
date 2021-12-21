@@ -3,7 +3,7 @@
 <suite name="Smoke" verbose="1" >
     <test name="AdditionalFuncsTest">
         <classes>
-            <class name="by.epam.qa.framework.test.UserAccessTests" />
+            <class name="by.epam.qa.framework.test.AdditionalFuncsTest" />
         </classes>
     </test>
 </suite>

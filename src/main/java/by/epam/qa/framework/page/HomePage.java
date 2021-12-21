@@ -10,6 +10,9 @@ public class HomePage extends AbstractPage{
     private final String PAGE_URL = "https://exness.com";
 
     private final By locatorSignInButton = By.xpath("//div[@class='sidebar-tabs__buttons']/a");
+    private final By locatorToolsAndServices = By.xpath("//*[text()='Tools & Services ']");
+    private final By locatorCurrencyConverter = By.xpath("//a[text()='Converter']");
+    private final By locatorTradersCalculator = By.xpath("//a[text()='Calculator']");
 
     public HomePage(WebDriver driver){
         super(driver);
@@ -22,6 +25,24 @@ public class HomePage extends AbstractPage{
         driver.navigate().to(URLToClick);
         logger.info("HomePage: goToSignInPage");
         return new SignInPage(driver);
+    }
+
+    public HomePage toolsAndServicesMenuTabClick(){
+        WebElement toolsAndServicesButton = wait.waitUntilpresenceOfElementLocated(locatorToolsAndServices);
+        toolsAndServicesButton.click();
+        return this;
+    }
+
+    public CurrencyConverterPage openCurrencyConverter(){
+        WebElement currencyConverterButton = wait.waitUntilpresenceOfElementLocated(locatorCurrencyConverter);
+        currencyConverterButton.click();
+        return new CurrencyConverterPage(driver);
+    }
+
+    public TradersCalculatorPage openTradersCalculator(){
+        WebElement tradersCalculatorButton = wait.waitUntilpresenceOfElementLocated(locatorTradersCalculator);
+        tradersCalculatorButton.click();
+        return new TradersCalculatorPage(driver);
     }
 
     @Override

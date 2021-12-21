@@ -19,8 +19,6 @@ public class AdditionalFuncsTest extends BaseConditions {
     public void currencyConverterWithZeroValue(){
         CurrencyConverterPageServiceImpl currencyConverterPageService = new HomePageServiceImpl(driver)
                 .openPage()
-                .goToSignInPage()
-                .signIn(TEST_USER)
                 .openCurrencyConverter()
                 .setAmount(ZERO_STRING);
 
@@ -31,8 +29,6 @@ public class AdditionalFuncsTest extends BaseConditions {
     public void tradersCalcLotInputValidationForZero(){
         TradersCalculatorPageServiceImpl tradersCalculatorPageService = new HomePageServiceImpl(driver)
                 .openPage()
-                .goToSignInPage()
-                .signIn(TEST_USER)
                 .openTradersCalculator()
                 .inputLotAmount(ZERO_STRING);
 

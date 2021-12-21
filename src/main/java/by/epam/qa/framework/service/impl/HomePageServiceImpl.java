@@ -1,14 +1,14 @@
 package by.epam.qa.framework.service.impl;
 
-import by.epam.qa.framework.page.AccountPage;
-import by.epam.qa.framework.page.HomePage;
-import by.epam.qa.framework.page.SignInPage;
+import by.epam.qa.framework.page.*;
 import org.openqa.selenium.WebDriver;
 
 public class HomePageServiceImpl extends AbstractService{
 
     private HomePage homePage;
     private SignInPage signInPage;
+    private CurrencyConverterPage currencyConverterPage;
+    private TradersCalculatorPage tradersCalculatorPage;
 
     public HomePageServiceImpl(WebDriver driver){
         super(driver);
@@ -18,6 +18,20 @@ public class HomePageServiceImpl extends AbstractService{
     public SignInPageServiceImpl goToSignInPage() {
         signInPage =  homePage.goToSignInPage();
         return new SignInPageServiceImpl(driver);
+    }
+
+    public CurrencyConverterPageServiceImpl openCurrencyConverter(){
+        currencyConverterPage = homePage
+                .toolsAndServicesMenuTabClick()
+                .openCurrencyConverter();
+        return new CurrencyConverterPageServiceImpl(driver);
+    }
+
+    public TradersCalculatorPageServiceImpl openTradersCalculator(){
+        tradersCalculatorPage = homePage
+                .toolsAndServicesMenuTabClick()
+                .openTradersCalculator();
+        return new TradersCalculatorPageServiceImpl(driver);
     }
 
     public HomePageServiceImpl openPage() {
